@@ -1,46 +1,46 @@
 
+---
+
 ```markdown
-# StepLock (Android)
+# StepLock
 
-StepLock is an Android application designed to help users stay active by **locking the device** once a daily step limit is reached. The app uses the built-in step counter sensor and system-level device admin APIs to enforce lock conditions.
-
----
-
-## 🚀 Features
-
-- Tracks user steps in real-time
-- Runs as a foreground service (continues in background)
-- Uses the low-power **TYPE_STEP_COUNTER** sensor
-- Locks device automatically when step goal is reached
-- Works even with the screen off
-- Device Admin support for secure lock enforcement
+**StepLock** is a motivational Android app that promotes physical activity by locking the device once the user reaches a predefined step limit. It continuously tracks steps in the background and uses Android’s Device Policy Manager to enforce the lock.
 
 ---
 
-## 🛠 Tech Stack
+## Features
 
-| Component | Technology |
-|---------|------------|
+- Real-time step tracking (low battery usage)
+- Runs in the background via a Foreground Service
+- Automatic device lock when step goal is reached
+- Uses the built-in **TYPE_STEP_COUNTER** sensor
+- Device Admin integration for secure locking
+
+---
+
+## Tech Overview
+
+| Component | Implementation |
+|---------|----------------|
 | Language | Kotlin |
-| IDE | Android Studio |
-| Sensors | Android SensorManager API |
+| Minimum Android | API 26 (Android 8.0) |
+| Step Tracking | `SensorManager` + `Sensor.TYPE_STEP_COUNTER` |
 | Background Execution | Foreground Service |
-| Lock Enforcement | DevicePolicyManager |
-| Minimum SDK | Android 8.0 (API 26) |
+| Lock Enforcement | `DevicePolicyManager` / Device Admin API |
 
 ---
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 
 app/
 └─ java/com/example/steplock/
 ├─ admin/
-│   └─ StepLockDeviceAdmin.kt      # Device admin receiver
+│   └─ StepLockDeviceAdmin.kt      # Handles device admin setup
 ├─ service/
-│   └─ StepCounterService.kt       # Foreground step tracking service
-└─ MainActivity.kt                 # Entry point & service launcher
+│   └─ StepCounterService.kt       # Tracks steps + triggers lock
+└─ MainActivity.kt                 # UI entry point / service launcher
 
 res/
 └─ xml/
@@ -50,7 +50,7 @@ res/
 
 ---
 
-## 🔐 Required Permissions (AndroidManifest.xml)
+## Required Permissions
 
 ```xml
 <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
@@ -60,71 +60,63 @@ res/
 
 ---
 
-## ✅ Setup Instructions
+## Getting Started
 
-1. **Clone the project**
+1. **Clone the repository**
 
-   ```
+   ```sh
    git clone https://github.com/yourusername/steplock.git
    ```
 
-2. **Open the project in Android Studio**
+2. **Open in Android Studio**
 
 3. **Enable Device Admin**
 
    * Launch the app
-   * Press *Enable Device Admin*
-   * Allow lock permissions
+   * Tap *Enable Device Admin*
+   * Confirm permissions
 
-4. **Start Step Tracking**
+4. **Start Tracking**
 
-   * Press *Start StepLock*
-   * Keep your phone with you — tracking runs in background
-
----
-
-## ⚙️ Customization
-
-| Setting                   | File                    | Notes                                |
-| ------------------------- | ----------------------- | ------------------------------------ |
-| Step goal limit           | `StepCounterService.kt` | Adjust `stepLimit` constant          |
-| Notification text         | `StepCounterService.kt` | Edit `startForegroundService()`      |
-| Lock enforcement behavior | `StepCounterService.kt` | Uses `DevicePolicyManager.lockNow()` |
+   * Tap *Start StepLock*
+   * The app will continue logging steps even when minimized
 
 ---
 
-## ⚠️ Important Notes
+## Customization
 
-* The step counter resets when the phone is rebooted.
-* To work reliably, the app must run as a **foreground service**.
-* Some OEM devices may require battery optimizations to be disabled.
+| Setting           | Location                              | Description                          |
+| ----------------- | ------------------------------------- | ------------------------------------ |
+| Step Goal         | `StepCounterService.kt` → `stepLimit` | Number of steps before lock          |
+| Notification Info | `startForegroundService()`            | Adjust title/text                    |
+| Lock Behavior     | `lockDevice()`                        | Uses `DevicePolicyManager.lockNow()` |
 
 ---
 
-## 📌 Next Planned Features
+## Notes
 
-* User-configurable step goal UI
-* Daily goal reset
-* Progress notification showing current steps
-* Automatic restart after reboot
+* Some devices may restrict background services — disabling battery optimization improves reliability.
+* Step counter values reset after device reboot unless tracked manually.
+* Works with phones that include a hardware step counter.
+
+---
+
+## Roadmap
+
+* User-configurable step goal
+* Progress shown in notification
+* Automatic restart on boot
+* Daily step reset
 
 ---
 
 ## License
 
-This project is released under the MIT License.
+MIT License — free for personal and commercial use.
 
 ```
 
 ---
 
-If you'd like, I can now **generate a GitHub-ready repository structure**, including:
-
-✅ README  
-✅ `.gitignore` for Android  
-✅ Default icons  
-✅ Screenshots placeholders  
-
-**Want that?**  
-**Yes / No**
+If you'd like, I can **add badges**, a **project logo**, or a **"How It Works" diagram** to make the README more visually professional.
 ```
