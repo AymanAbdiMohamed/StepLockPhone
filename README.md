@@ -116,7 +116,5 @@ MIT License — free for personal and commercial use.
 
 ```
 
----
 
-If you'd like, I can **add badges**, a **project logo**, or a **"How It Works" diagram** to make the README more visually professional.
-```
+
